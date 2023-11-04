@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smoke Detection App</title>
+    <!-- Add Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom CSS for the form fields with decreased border radius and elevation */
+        .elevated-form-field {
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        /* Custom CSS for the heading */
+        .app-heading {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        /* Custom CSS for the introduction text */
+        .introduction {
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+        /* Custom CSS for the page border/margin */
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+        /* Custom CSS for scroll behavior */
+        .intro-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .data-section {
+            background-color: #ffffff; /* Set the background color to white */
+            padding: 20px;
+        }
+        /* Custom CSS for the navigation menu */
+        .navigation-menu {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed; /* Fixed position to occupy the top */
+            width: 100%; /* Full width */
+            top: 0; /* Top of the page */
+            font-size: 18px; /* Increase font size */
+        }
+        .navigation-link {
+            margin: 10px;
+            color: #fff; /* Text color white */
+            text-decoration: none; /* Remove underlines */
+            font-weight: bold;
+        }
+        .navigation-link:hover {
+            text-decoration: none; /* Add underline on hover */
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Menu -->
+    <div class="navigation-menu">
+        <a href="#intro" class="navigation-link">Introduction</a>
+        <a href="#dataForm" class="navigation-link">Form</a>
+    </div>
+
+    <div class="container intro-section" id="intro">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="introduction text-center">
+                    <h1 class="app-heading">Smoke Detection App</h1>
+                    <p>Introduction: Explain how the app works and what problems it solves.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container data-section" id="dataForm">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <form>
+                    <!-- Temperature input field -->
+                    <div class="form-group elevated-form-field">
+                        <input type="number" step="0.01" class="form-control" id="temperature" placeholder="Temperature" required>
+                    </div>
+
+                    <!-- Humidity input field -->
+                    <div class="form-group elevated-form-field">
+                        <input type="number" step="0.01" class="form-control" id="humidity" placeholder="Humidity" required>
+                    </div>
+
+                    <!-- TVOC input field -->
+                    <div class="form-group elevated-form-field">
+                        <input type="number" step="0.01" class="form-control" id="tvoc" placeholder="TVOC" required>
+                    </div>
+
+                    <!-- eCO2 input field -->
+                    <div class="form-group elevated-form-field">
+                        <input type="number" step="0.01" class="form-control" id="eco2" placeholder="eCO2" required>
+                    </div>
+
+                    <!-- Raw H2 input field -->
+                    <div class="form-group elevated-form-field">
+                        <input type="number" step="0.01" class="form-control" id="rawH2" placeholder="Raw H2" required>
+                    </div>
+
+                    <!-- Raw Ethanol input field -->
+                    <div class="form-group elevated-form-field">
+                        <input type="number" step="0.01" class="form-control" id="raw_ethanol" placeholder="Raw Ethanol" required>
+                    </div>
+
+                    <!-- Pressure input field -->
+                    <div class="form-group elevated-form-field">
+                        <input type="number" step="0.01" class="form-control" id="pressure" placeholder="Pressure" required>
+                    </div>
+
+                    <!-- NC-05 input field -->
+                    <div class="form-group elevated-form-field">
+                        <input type="number" step="0.01" class="form-control" id="nc_05" placeholder="NC-05" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary d-block mx-auto mt-3">Submit</button>
+                </form>
+
+                <div id="result" class="result text-center mt-4">
+                    <!-- The prediction result will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Bootstrap JavaScript and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $("#dataForm").submit(function(e) {
+                e.preventDefault();
+
+                // Gather input data
+                const data = {
+                    temperature: parseFloat($("#temperature").val()),
+                    humidity: parseFloat($("#humidity").val()),
+                    tvoc: parseFloat($("#tvoc").val()),
+                    eco2: parseFloat($("#eco2").val()),
+                    rawH2: parseFloat($("#rawH2").val()),
+                    raw_ethanol: parseFloat($("#raw_ethanol").val()),
+                    pressure: parseFloat($("#pressure").val()),
+                    nc_05: parseFloat($("#nc_05").val())
+                };
+
+                // Send data to your API and handle the response
+                $.ajax({
+                    url: 'http://localhost:8080/model', // Replace with your API endpoint
+                    method: 'POST',
+                    data: JSON.stringify(data),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        console.log(response.ans)
+                        if (response.status === 200) {
+                            $("#result").html("API Response: " + response.data.ans);
+                        } else if (response.status === 422) {
+                            $("#result").html("422 Error: Invalid data format.");
+                        } else if (response.status === 500) {
+                            $("#result").html("500 Error: Server error.");
+                        }
+                    },
+                    error: function() {
+                        $("#result").html("Error: Failed to contact the server.");
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
