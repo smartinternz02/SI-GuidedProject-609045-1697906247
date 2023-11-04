@@ -1,13 +1,15 @@
 import pickle
 import uvicorn
 from fastapi import FastAPI,HTTPException,status,Request
-from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from schemas import Data,PredictOutput
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 app = FastAPI()
 
 origins = ["*"]  # Replace "*" with the specific origins you want to allow, or use a list of allowed domains
+
+app.mount("/static",StaticFiles(directory="static"),name="static")
 
 app.add_middleware(
     CORSMiddleware,

@@ -6,62 +6,7 @@
     <title>Smoke Detection App</title>
     <!-- Add Bootstrap CSS link -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        /* Custom CSS for the form fields with decreased border radius and elevation */
-        .elevated-form-field {
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        /* Custom CSS for the heading */
-        .app-heading {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        /* Custom CSS for the introduction text */
-        .introduction {
-            font-size: 16px;
-            margin-bottom: 30px;
-        }
-        /* Custom CSS for the page border/margin */
-        html, body {
-            margin: 0;
-            padding: 0;
-        }
-        /* Custom CSS for scroll behavior */
-        .intro-section {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        .data-section {
-            background-color: #ffffff; /* Set the background color to white */
-            padding: 20px;
-        }
-        /* Custom CSS for the navigation menu */
-        .navigation-menu {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 10px;
-            position: fixed; /* Fixed position to occupy the top */
-            width: 100%; /* Full width */
-            top: 0; /* Top of the page */
-            font-size: 18px; /* Increase font size */
-        }
-        .navigation-link {
-            margin: 10px;
-            color: #fff; /* Text color white */
-            text-decoration: none; /* Remove underlines */
-            font-weight: bold;
-        }
-        .navigation-link:hover {
-            text-decoration: none; /* Add underline on hover */
-        }
-    </style>
+    <link rel="stylesheet" href="static/styles.css"> <!-- Link to your CSS file -->
 </head>
 <body>
     <!-- Navigation Menu -->
@@ -138,46 +83,6 @@
     <!-- Add Bootstrap JavaScript and jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            $("#dataForm").submit(function(e) {
-                e.preventDefault();
-
-                // Gather input data
-                const data = {
-                    temperature: parseFloat($("#temperature").val()),
-                    humidity: parseFloat($("#humidity").val()),
-                    tvoc: parseFloat($("#tvoc").val()),
-                    eco2: parseFloat($("#eco2").val()),
-                    rawH2: parseFloat($("#rawH2").val()),
-                    raw_ethanol: parseFloat($("#raw_ethanol").val()),
-                    pressure: parseFloat($("#pressure").val()),
-                    nc_05: parseFloat($("#nc_05").val())
-                };
-
-                // Send data to your API and handle the response
-                $.ajax({
-                    url: 'http://localhost:8080/model', // Replace with your API endpoint
-                    method: 'POST',
-                    data: JSON.stringify(data),
-                    contentType: 'application/json',
-                    success: function(response) {
-                        console.log(response.ans)
-                        if (response.status === 200) {
-                            $("#result").html("API Response: " + response.data.ans);
-                        } else if (response.status === 422) {
-                            $("#result").html("422 Error: Invalid data format.");
-                        } else if (response.status === 500) {
-                            $("#result").html("500 Error: Server error.");
-                        }
-                    },
-                    error: function() {
-                        $("#result").html("Error: Failed to contact the server.");
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="static/script.js"></script> <!-- Link to your JavaScript file -->
 </body>
 </html>

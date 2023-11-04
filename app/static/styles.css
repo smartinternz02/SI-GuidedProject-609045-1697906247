@@ -1,0 +1,66 @@
+/* styles.css */
+/* Custom CSS for the form fields with decreased border radius and elevation */
+.elevated-form-field {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* Custom CSS for the heading */
+.app-heading {
+    font-size: 30px; /* Increase the font size */
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Custom CSS for the introduction text */
+.introduction {
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+/* Custom CSS for the page border/margin */
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Custom CSS for scroll behavior */
+.intro-section {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.data-section {
+    background-color: #ffffff; /* Set the background color to white */
+    padding: 20px;
+}
+
+/* Custom CSS for the navigation menu */
+.navigation-menu {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    font-size: 24px; /* Increase the font size */
+    z-index: 1; /* Ensure it's above other content */
+    font-family: 'Arial', sans-serif; /* Change the font-family */
+    padding: 20px; /* Increase padding */
+    margin-bottom: 10px; /* Increase margin */
+}
+
+.navigation-link {
+    margin: 10px;
+    color: #fff; /* Text color white */
+    text-decoration: none; /* Remove underlines */
+    font-weight: bold;
+}
+
+.navigation-link:hover {
+    text-decoration: none; /* Add underline on hover */
+}
