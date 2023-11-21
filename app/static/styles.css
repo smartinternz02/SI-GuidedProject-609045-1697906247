@@ -1,5 +1,14 @@
 /* styles.css */
 /* Custom CSS for the form fields with decreased border radius and elevation */
+body {
+    background-image: url('back.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Keeps the background fixed even when scrolling */
+    color: #fff; /* Set the default text color on the background image */
+}
+
 .elevated-form-field {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
@@ -17,6 +26,7 @@
 .introduction {
     font-size: 16px;
     margin-bottom: 30px;
+    color: white;
 }
 
 /* Custom CSS for the page border/margin */
@@ -35,8 +45,7 @@ html, body {
 }
 
 .data-section {
-    background-color: #ffffff; /* Set the background color to white */
-    padding: 20px;
+    padding: 10px;
 }
 
 /* Custom CSS for the navigation menu */
@@ -63,4 +72,7 @@ html, body {
 
 .navigation-link:hover {
     text-decoration: none; /* Add underline on hover */
+}
+.smoke-detected-symbol {
+    color: yellow; /* Color for the warning symbol when smoke is detected */
 }

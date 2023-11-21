@@ -1,4 +1,3 @@
-// script.js
 $(document).ready(function() {
     $("#dataForm").submit(function(e) {
         e.preventDefault();
@@ -27,7 +26,7 @@ $(document).ready(function() {
             if (response.status === 200) {
                 return response.json(); // Assuming the response is in JSON format
             } else if (response.status === 422) {
-                throw  Error('422 Error: Invalid data format');
+                throw Error('422 Error: Invalid data format');
             } else if (response.status === 500) {
                 throw new Error('500 Error: Internal Server Error');
             } else {
@@ -36,10 +35,17 @@ $(document).ready(function() {
         })
         .then(data => {
             // Log the response for inspection
-            $("#result").html("API Response: " + data.ans);
+            console.log(data);
+
+            // Display result with warning symbol and color
+            if (data.ans === 1) {
+                $("#result").html("API Response: <span class='smoke-detected-symbol'>⚠️</span> Smoke is detected <span class='smoke-detected-symbol'>⚠️</span>").addClass("smoke-detected");
+            } else {
+                $("#result").html("API Response: Smoke is not detected").removeClass("smoke-detected");
+            }
         })
         .catch(error => {
-            $("#result").html("Error: " + error.message);
+            $("#result").html("Error: " + error.message).removeClass("smoke-detected");
         });
     });
 });
