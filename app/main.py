@@ -20,6 +20,7 @@ app.add_middleware(
 )
 
 MODEL = pickle.load(open("model.pkl","rb"))
+SCALAR = pickle.load(open("scalar.pkl","rb"))
 
 templates = Jinja2Templates(directory="templates")
 
@@ -30,7 +31,8 @@ async def root(request:Request):
 @app.post("/model",response_model=PredictOutput)
 def predict(body:Data):
     try:
-        res = MODEL.predict([[body.temperature,body.humidity,body.tvoc,body.eco2,body.rawH2,body.raw_ethanol,body.pressure,body.nc_05]])
+        out = SCALAR.transform([[body.temperature,body.humidity,body.tvoc,body.eco2,body.rawH2,body.raw_ethanol,body.pressure,body.nc_05]])
+        res = MODEL.predict(out)
     except:
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR,detail="server error")
     return {"ans":int(res[0])}
